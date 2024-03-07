@@ -6,15 +6,15 @@ require('dotenv').config();
 
 mongoose.set("strictQuery", false);
 const mongoDB = process.env.DATABASE_URI;
-
+app.use(express.json());
 main().catch((err) => console.log(err));
 async function main(){
     await mongoose.connect(mongoDB);
 }
 
-app.get('/', (req, res) => {
-    res.send("Hello World!");
-})
+const authRoutes = require('./routes/auth');
+app.use('/api/auth', authRoutes);
+
 
 app.listen(port, () => {
     console.log(`Server listening on port ${port}`);
