@@ -28,40 +28,35 @@ const AuthPage = () => {
         const headers = {
             'Content-Type': 'application/json',
         };
-        const body = JSON.stringify({
+        const body = isLogin ? JSON.stringify({
+            email,
+            password,
+        }) : JSON.stringify({
             username,
             email,
             password,
         });
 
         const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                email: formData.email,
-                password: formData.password,
-                // username: formData.username, // Include or remove username based on your API requirement for login
-            })
+            method,
+            headers,
+            body,
         };
 
         try {
-            const url = 'http://localhost:3000/api/auth/login'; // Your login API endpoint
+            // Use the dynamically set URL for the request
             const response = await fetch(url, requestOptions);
 
             if (!response.ok) {
-                // If the response is not ok, throw an error
-                const errorResponse = await response.json(); // Assuming the server always sends JSON
-                throw new Error(errorResponse.message || 'Login failed');
+                const errorResponse = await response.json();
+                throw new Error(errorResponse.message || 'An error occurred');
             }
 
             const data = await response.json();
             console.log('Success:', data.message);
-            // Assuming you handle token storage here if needed
-
-            navigate('/feed'); // Use navigate for redirection
+            navigate('/feed');
         } catch (error) {
             console.error('Error:', error.message);
-            // Handle displaying the error to the user here
         }
     };
 
