@@ -8,7 +8,7 @@ const SubscriptionSchema = new Schema({
     dateSubscribed: { type: Date, default: Date.now }
 })
 
-SubscriptionSchema.virtual("url").get(function() {
+SubscriptionSchema.virtual("subscriptionUrl").get(function() {
     return `/subscription/${this._id}`;
 })
 

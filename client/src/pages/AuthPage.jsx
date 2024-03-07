@@ -24,28 +24,14 @@ const AuthPage = () => {
         e.preventDefault();
         const url = isLogin ? 'http://localhost:3000/api/auth/login' : 'http://localhost:3000/api/auth/signup';
 
-        const method = 'POST';
-        const headers = {
-            'Content-Type': 'application/json',
-        };
-        const body = isLogin ? JSON.stringify({
-            email,
-            password,
-        }) : JSON.stringify({
-            username,
-            email,
-            password,
-        });
-
-        const requestOptions = {
-            method,
-            headers,
-            body,
-        };
-
         try {
-            // Use the dynamically set URL for the request
-            const response = await fetch(url, requestOptions);
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ username, email, password }),
+            });
 
             if (!response.ok) {
                 const errorResponse = await response.json();
@@ -54,11 +40,18 @@ const AuthPage = () => {
 
             const data = await response.json();
             console.log('Success:', data.message);
+
+            if (data.token) {
+                localStorage.setItem('token', data.token); // Store the token for later use
+            }
+
             navigate('/feed');
         } catch (error) {
             console.error('Error:', error.message);
+            // Consider setting an error state and displaying this to the user
         }
     };
+
 
     return (
         <div>

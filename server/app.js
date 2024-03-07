@@ -46,6 +46,8 @@ app.get('/', (req, res) => {
 const authRoutes = require('./routes/auth');
 app.use('/api/auth', authRoutes);
 
+const subscriptionRoutes = require('./routes/subscription');
+app.use('/api/add-subscriptions', subscriptionRoutes);
 
 app.listen(port, () => {
     console.log(`Server listening on port ${port}`);

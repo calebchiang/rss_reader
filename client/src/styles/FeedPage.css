@@ -1,0 +1,5 @@
+.main-content {
+    margin-left: 250px; /* Add a left margin to the main content that matches the sidebar width */
+    padding: 1px 16px; /* Padding for the content */
+    height: 1000px; /* Example content height */
+}
