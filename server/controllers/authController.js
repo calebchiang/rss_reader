@@ -3,10 +3,11 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 exports.signup = async (req, res) => {
+    console.log('Signup request received', req.body);
     try {
         let user = await User.findOne({ email: req.body.email });
         if (user) {
-            return res.status(400).send('Email already in use');
+            return res.status(400).json({ message: 'Email already in use' });
         }
         const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
@@ -17,22 +18,23 @@ exports.signup = async (req, res) => {
         });
 
         await user.save();
-        res.status(201).send("User created successfully");
+        res.status(201).json({ message: "User created successfully" });
     } catch(error) {
-        res.status(500).send("Error creating the user");
+        res.status(500).json({ message: "Error creating the user", error: error.message });
     }
 };
 
 exports.login = async (req, res) => {
+    console.log('Login request received', req.body);
     try {
         const user = await User.findOne({ email: req.body.email });
         if(!user){
-            return res.status(400).send("User not found");
+            return res.status(400).json({ message: "User not found" });
         }
 
         const isValid = await bcrypt.compare(req.body.password, user.password);
         if (!isValid){
-            return res.status(400).send("Invalid password");
+            return res.status(400).json({ message: "Invalid password" });
         }
 
         const token = jwt.sign(
@@ -47,6 +49,6 @@ exports.login = async (req, res) => {
             userId: user._id
         });
     } catch(error) {
-        res.status(500).send("Error logging in the user");
+        res.status(500).json({ message: "Error logging in the user", error: error.message });
     }
-}
+};
