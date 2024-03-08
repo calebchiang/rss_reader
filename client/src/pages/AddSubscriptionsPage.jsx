@@ -47,7 +47,7 @@ const AddSubscriptionsPage = () => {
             <div className="sidebar">
                 <Sidebar />
             </div>
-            <div className="main-content">
+            <div className="main-content flex-1 pl-16">
                 <form onSubmit={handleSubmit}>
                     <div>
                     <label>RSS Feed URL:</label>

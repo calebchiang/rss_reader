@@ -5,6 +5,8 @@ import AuthPage from './pages/AuthPage';
 import FeedPage from './pages/FeedPage';
 import AddSubscriptionsPage from './pages/AddSubscriptionsPage';
 
+
+
 function App() {
     return (
         <Router>

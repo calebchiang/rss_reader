@@ -9,10 +9,10 @@ const AuthPage = () => {
         password: '',
     });
 
-    const { username, email, password } = formData;
+    const {username, email, password} = formData;
 
     const onChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+        setFormData({...formData, [e.target.name]: e.target.value});
     };
 
     // Define the toggleForm function here
@@ -30,7 +30,7 @@ const AuthPage = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ username, email, password }),
+                body: JSON.stringify({username, email, password}),
             });
 
             if (!response.ok) {
@@ -52,48 +52,64 @@ const AuthPage = () => {
         }
     };
 
-
     return (
-        <div>
-            {isLogin ? (
-                <div>
-                    <h2>Login</h2>
-                    <form onSubmit={onSubmit}>
-                        <div>
-                            <label>Email:</label>
-                            <input type="email" name="email" value={email} onChange={onChange} required />
-                        </div>
-                        <div>
-                            <label>Password:</label>
-                            <input type="password" name="password" value={password} onChange={onChange} required />
-                        </div>
-                        <button type="submit">Log In</button>
-                    </form>
-                    <p>Don't have an account? <button onClick={toggleForm}>Sign up here</button></p>
+        <div className="flex justify-center items-center h-screen bg-indigo-600">
+            <form onSubmit={onSubmit} className="w-96 p-6 shadow-lg bg-white rounded-md">
+                <h1 className="text-xl mb-4">{isLogin ? 'Login' : 'Sign Up'}</h1>
+                {!isLogin && (
+                    <div className="mb-4">
+                        <label htmlFor="username" className="block text-sm font-medium text-gray-700">Username:</label>
+                        <input
+                            type="text"
+                            name="username"
+                            id="username"
+                            value={username}
+                            onChange={onChange}
+                            placeholder="Username"
+                            className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
+                        />
+                    </div>
+                )}
+                <div className="mb-4">
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email:</label>
+                    <input
+                        type="email"
+                        name="email"
+                        id="email"
+                        value={email}
+                        onChange={onChange}
+                        placeholder="Email"
+                        className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
+                        required
+                    />
                 </div>
-            ) : (
-                <div>
-                    <h2>Sign Up</h2>
-                    <form onSubmit={onSubmit}>
-                        <div>
-                            <label>Username:</label>
-                            <input type="text" name="username" value={username} onChange={onChange} required />
-                        </div>
-                        <div>
-                            <label>Email:</label>
-                            <input type="email" name="email" value={email} onChange={onChange} required />
-                        </div>
-                        <div>
-                            <label>Password:</label>
-                            <input type="password" name="password" value={password} onChange={onChange} required />
-                        </div>
-                        <button type="submit">Sign Up</button>
-                    </form>
-                    <p>Already have an account? <button onClick={toggleForm}>Log in here</button></p>
+                <div className="mb-4">
+                    <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password:</label>
+                    <input
+                        type="password"
+                        name="password"
+                        id="password"
+                        value={password}
+                        onChange={onChange}
+                        placeholder="Password"
+                        className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
+                        required
+                    />
                 </div>
-            )}
+                <button type="submit"
+                        className="w-full bg-indigo-600 text-white p-2 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50">
+                    {isLogin ? 'Login' : 'Sign Up'}
+                </button>
+                <button type="button" onClick={toggleForm}
+                        className="mt-4 w-full bg-gray-200 text-gray-700 p-2 rounded-md hover:bg-gray-300 focus:outline-none">
+                    {isLogin ? 'Need an account? Sign Up' : 'Have an account? Login'}
+                </button>
+            </form>
         </div>
     );
-};
+
+
+}
+
 
 export default AuthPage;
