@@ -1,5 +1,6 @@
 const Subscription = require('../models/subscription');
 
+
 exports.addSubscription = async (req, res) => {
     try {
         const { url, title } = req.body;
