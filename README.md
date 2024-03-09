@@ -1,2 +1,2 @@
 # rss_reader
-RSS reader built with Express backend and React frontend.
+RSS reader built with Node Express backend and React frontend.
