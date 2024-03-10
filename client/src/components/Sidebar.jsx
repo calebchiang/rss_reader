@@ -11,21 +11,15 @@ import { GoSidebarCollapse } from "react-icons/go";
 
 const Sidebar = () => {
     const navigate = useNavigate();
-    const [isOpen, setIsOpen] = useState(true);
-    const toggleSidebar = () => {
-        setIsOpen(!isOpen);
-    }
 
     return (
-        <div className={`fixed top-0 left-0 h-screen ${isOpen ? 'w-16' : 'w-0'} m-0 flex flex-col bg-indigo-600 text-white shadow-lg`}>
-            <ExpandCollapseIcon toggleSidebar={toggleSidebar} isOpen={isOpen} />
-            {isOpen && (
+        <div className={`fixed top-0 left-0 h-screen w-16 m-0 flex flex-col bg-indigo-600 text-white shadow-lg`}>
                 <>
                     <SideBarIcon icon={<CiHome />} text="Go back to feed" path='/feed' navigate={navigate}/>
                     <SideBarIcon icon={<IoAddCircleSharp />} text="Add Subscriptions" path='/addSubscriptions' navigate={navigate}/>
                     <SideBarIcon icon={<FaRegUser />} text="Manage Subscriptions" path='/yourPath' navigate={navigate}/>
                 </>
-            )}
+
         </div>
     );
 };
@@ -46,13 +40,4 @@ const SideBarIcon = ({ icon, text = 'tooltip', path, navigate }) => {
         </div>
     );
 };
-
-const ExpandCollapseIcon = ({ toggleSidebar, isOpen }) => {
-    return (
-        <div className={isOpen ? 'expand-icon' : 'collapse-icon'} onClick={toggleSidebar}>
-            {isOpen ? <GoSidebarExpand /> : <GoSidebarCollapse />}
-        </div>
-    );
-};
-
 export default Sidebar;
