@@ -31,7 +31,7 @@ exports.fetchAndParseRSS = async (url) => {
 
 exports.updateFeed = async (req, res) => {
     try {
-        const userId = req.user.userId; // Assumes `req.user.id` is set by your authentication middleware
+        const userId = req.user.userId;
 
         // Fetch user subscription URLs
         const urls = await exports.getUserSubscriptionUrls(userId);
