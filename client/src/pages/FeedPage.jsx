@@ -1,39 +1,95 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Sidebar from '../components/Sidebar.jsx';
+import Card from '../components/Card.jsx';
+import { GiCoffeeCup } from "react-icons/gi";
 
 const FeedPage = () => {
-    const handleUpdateClick = async () => {
-        try {
-            const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:3000/feed/update', {
-                method: 'GET', // or 'POST' if your endpoint requires it
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`,
-                },
-            });
+    const [feeds, setFeeds] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [username, setUsername] = useState('');
 
-            if (!response.ok) {
-                throw new Error('Failed to fetch the feed');
+    useEffect(() => {
+        // Define the function to update the feed
+        const updateFeed = async () => {
+            setIsLoading(true); // Start loading
+            try {
+                const token = localStorage.getItem('token');
+                const response = await fetch('http://localhost:3000/feed/update', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`,
+                    },
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to fetch the feed');
+                }
+
+                const data = await response.json(); // Parse the JSON response
+                setFeeds(data); // Set the feeds in the state
+            } catch (error) {
+                console.error('Error fetching feed update:', error);
+                // Handle the error state here, if needed
             }
+            setIsLoading(false); // Finish loading
+        };
 
-            // You can process the response if needed, or just confirm in console
-            console.log('Feed update requested successfully');
-        } catch (error) {
-            console.error('Error fetching feed update:', error);
-        }
-    };
+        // Define the function to fetch the username
+        const fetchUsername = async () => {
+            const token = localStorage.getItem('token');
+            try {
+                const response = await fetch('http://localhost:3000/api/user/username', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                    },
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to fetch username');
+                }
+
+                const data = await response.json();
+                setUsername(data.username); // Set the fetched username
+            } catch (error) {
+                console.error('Error fetching username:', error);
+            }
+        };
+
+        // Call both functions
+        updateFeed();
+        fetchUsername();
+    }, []);
+
+if (isLoading) {
+        return (
+            <div className="flex h-screen bg-gray-100">
+                <Sidebar className="w-64 h-screen bg-gray-800 text-white fixed inset-y-0 left-0" />
+                <div className="main-content flex-1 ml-64 p-8">
+                    <div className="flex justify-center items-center h-full">
+                        <div>Loading...</div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     return (
-        <div className="flex h-screen overflow-hidden bg-gray-100">
-            <Sidebar className="w-64 min-h-screen bg-gray-800 text-white" />
-            <div className="main-content flex-1 bg-white overflow-y-auto">
-                <div className="p-8">
-                    <h1 className="text-2xl font-semibold text-gray-800">Feed Page</h1>
-                    <p className="mt-2 text-gray-600">This is the feed. Content will appear here.</p>
-                    <button onClick={handleUpdateClick} className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 transition ease-in-out duration-150">
-                        Update Feed
-                    </button>
+        <div className="flex h-screen bg-gray-100">
+            <Sidebar className="w-64 h-screen bg-gray-800 text-white fixed inset-y-0 left-0" />
+            <div className="flex-1 ml-16 p-8 flex flex-col">
+                <div className="flex justify-center">
+                    <h1 className="text-2xl font-semibold text-gray-800" style={{ fontFamily: "Times New Roman, Times, serif" }}>Welcome back, {username}</h1>
+                </div>
+                <div className="flex justify-center">
+                    <h2 className="text-xl text-gray-800" style={{ fontFamily: "Times New Roman, Times, serif" }}>Enjoy your readings for today</h2>
+                    <GiCoffeeCup />
+                </div>
+                <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 overflow-auto">
+                    {feeds.map((feed, index) => (
+                        <Card key={index} feed={feed} />
+                    ))}
                 </div>
             </div>
         </div>

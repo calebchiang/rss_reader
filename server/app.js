@@ -49,8 +49,11 @@ app.use('/api/auth', authRoutes);
 const subscriptionRoutes = require('./routes/subscription');
 app.use('/api/add-subscriptions', subscriptionRoutes);
 
-const feedRoutes = require('./routes/feed'); // Adjust the path as necessary
+const feedRoutes = require('./routes/feed');
 app.use('/feed', feedRoutes);
+
+const userRoutes = require('./routes/username');
+app.use('/api/user', userRoutes);
 
 app.listen(port, () => {
     console.log(`Server listening on port ${port}`);

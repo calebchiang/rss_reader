@@ -1,6 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+    @apply bg-gray-100;
+}
+
 @layer components {
     .sidebar-icon{
         @apply relative flex items-center justify-center h-12
@@ -15,11 +20,4 @@
         transition-all duration-100 scale-0 origin-left;
     }
 
-    .expand-icon {
-        @apply relative flex items-center justify-center h-12 w-12 mx-auto text-gray-200 transition-all ease-linear cursor-pointer;
-    }
-
-    .collapse-icon {
-        @apply relative flex items-center justify-center h-12 w-12 mx-auto text-black transition-all  ease-linear cursor-pointer;
-    }
 }

@@ -6,7 +6,7 @@ import { CiHome } from "react-icons/ci";
 import { FaRegUser } from "react-icons/fa6";
 import { GoSidebarExpand } from "react-icons/go";
 import { GoSidebarCollapse } from "react-icons/go";
-
+import { FaSignOutAlt } from "react-icons/fa";
 
 const Sidebar = () => {
     const navigate = useNavigate();
@@ -21,24 +21,26 @@ const Sidebar = () => {
                     <SideBarIcon icon={<CiHome />} text="Go back to feed" path='/feed' navigate={navigate}/>
                     <SideBarIcon icon={<IoAddCircleSharp />} text="Add Subscriptions" path='/addSubscriptions' navigate={navigate}/>
                     <SideBarIcon icon={<FaRegUser />} text="Manage Subscriptions" path='/yourPath' navigate={navigate}/>
-                    <button onClick={signOut} className="mt-4 w-full bg-red-600 text-white p-2 rounded-md hover:bg-red-700 focus:outline-none">
-                        Sign Out
-                    </button>
+                    <SideBarIcon icon={<FaSignOutAlt />} text="Sign out" onClick={signOut} path='/' navigate={navigate}/>
+
                 </>
 
         </div>
     );
 };
 
-const SideBarIcon = ({ icon, text = 'tooltip', path, navigate }) => {
-    const onClick = () => {
+const SideBarIcon = ({ icon, text = 'tooltip', path, navigate, onClick }) => {
+    const handleClick = () => {
         if (path && navigate) {
             navigate(path);
+        }
+        if (onClick) {
+            onClick();
         }
     };
 
     return (
-        <div className="sidebar-icon group" onClick={onClick}>
+        <div className="sidebar-icon group" onClick={handleClick}>
             {icon}
             <span className="sidebar-tooltip group-hover:scale-100">
                 {text}
