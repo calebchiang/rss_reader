@@ -20,11 +20,9 @@ const Sidebar = () => {
                 <>
                     <SideBarIcon icon={<CiHome />} text="Go back to feed" path='/feed' navigate={navigate}/>
                     <SideBarIcon icon={<IoAddCircleSharp />} text="Add Subscriptions" path='/addSubscriptions' navigate={navigate}/>
-                    <SideBarIcon icon={<FaRegUser />} text="Manage Subscriptions" path='/yourPath' navigate={navigate}/>
+                    <SideBarIcon icon={<FaRegUser />} text="Manage Subscriptions" path='/manageSubscriptions' navigate={navigate}/>
                     <SideBarIcon icon={<FaSignOutAlt />} text="Sign out" onClick={signOut} path='/' navigate={navigate}/>
-
                 </>
-
         </div>
     );
 };

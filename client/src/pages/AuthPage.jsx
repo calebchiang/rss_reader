@@ -53,7 +53,7 @@ const AuthPage = () => {
     };
 
     return (
-        <div className="flex justify-center items-center h-screen bg-indigo-600">
+        <div className="flex justify-center items-center h-screen bg-indigo-600" style={{ fontFamily: "Times New Roman, Times, serif" }}>
             <form onSubmit={onSubmit} className="w-96 p-6 shadow-lg bg-white rounded-md">
                 <h1 className="text-xl mb-4">{isLogin ? 'Login' : 'Sign Up'}</h1>
                 {!isLogin && (

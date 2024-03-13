@@ -47,7 +47,7 @@ const authRoutes = require('./routes/auth');
 app.use('/api/auth', authRoutes);
 
 const subscriptionRoutes = require('./routes/subscription');
-app.use('/api/add-subscriptions', subscriptionRoutes);
+app.use('/api/subscriptions', subscriptionRoutes); // Note the change here
 
 const feedRoutes = require('./routes/feed');
 app.use('/feed', feedRoutes);
