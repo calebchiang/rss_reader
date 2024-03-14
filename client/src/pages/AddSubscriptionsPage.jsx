@@ -34,6 +34,7 @@ const AddSubscriptionsPage = () => {
             }
 
             console.log('Subscription added successfully');
+            alert("Successfully added subscription!");
         } catch (error) {
             console.error('Error:', error.message);
         }
